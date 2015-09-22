@@ -1,0 +1,62 @@
+#This program will encrypt and decrypt a message using the
+#caesar cipher concept
+
+#allows the use of the automatic clipboard copy after a conversion
+import pyperclip
+
+print("Hello.")
+#initialize loop variable
+Again = "Y"
+#loops so multiple conversions can be made
+while Again == "Y":
+
+    #message to be converted
+    Message = input("Please enter message: ")
+
+    #decides wether to encrypt of decrypt
+    Mode = input("Please choose to (E)crypt or (D)ecrypt: ")
+    Mode = Mode.upper()
+
+    #the key used for encryption/decryption
+    Key = input("Please enter key: ")
+    Key = int(Key)
+
+    #initializes variable for each letter to be compared to
+    LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    LETTERS = LETTERS + "abcdefghijklmnopqrstuvwxyz1234567890"
+    LETTERS = LETTERS + ".,'/\";:<>?[]{}\\|!@#$%^&*()-=_+`~"
+    
+    Translated = ""
+    
+    for Symbol in Message:
+        if Symbol in LETTERS:
+            Num = LETTERS.find(Symbol)
+        
+            if Mode == "E":
+                Num = Num + Key
+            elif Mode == "D":
+                Num = Num - Key
+    
+            if Num >= len(LETTERS):
+                Num = Num - len(LETTERS)
+            elif Num < 0:
+                Num = Num + len(LETTERS)
+    
+            Translated = Translated + LETTERS[Num]
+    
+        else:
+            Translated = Translated + Symbol
+    
+    print(Translated)
+
+    Conversion = input("Would you like to copy the message to your clipboard?: (Y)or(N)")
+    Conversion = Conversion.upper()
+    if Conversion == "Y":
+        #copies the converted message to the clipboard
+        pyperclip.copy(Translated)
+    
+    
+    Again = input("Would you like to translate another message?: (Y)or(N)")
+    Again = Again.upper()
+
+print("Have a good day.")
